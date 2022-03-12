@@ -30,17 +30,17 @@ public class ControleBlog extends HttpServlet {
 
             if(nome.length() < 3 || nome.trim().length() == 0){
                 request.setAttribute("ERRO_BEAN",
-                        new String("ERRO: <b>O Nome n�o pode ser vazio e inferior a 3 caracteres.</b>"));
+                        new String("ERRO: <b>O Nome não pode ser vazio e inferior a 3 caracteres.</b>"));
                 request.getRequestDispatcher("/miniblog/login.jsp").forward(request, response);
                 return;
             }
             request.getSession().setAttribute("usuario", nome);
         }
 
-        // Contexto de Aplicação  usar getServletContexto. Para contexto de sessao usar request.getSession()
+        // Contexto de AplicaÃ§Ã£o  usar getServletContexto. Para contexto de sessao usar request.getSession()
         ServletContext contextoObjetoBean = getServletContext();
         
-        // carrega a lista de “mensagens�?, cria a lista se necessário.
+        // carrega a lista de â€œmensagensâ€?, cria a lista se necessÃ¡rio.
         ArrayList<BlogMensagem> listaMsg = (ArrayList) contextoObjetoBean.getAttribute("BEAN_LISTA");     
         if (listaMsg == null) {
            listaMsg = new ArrayList();
@@ -80,11 +80,11 @@ public class ControleBlog extends HttpServlet {
                     if(listaMsgF.getUsuario().equals(usuarioSession)){
                         listaMsg.remove(i); 
                         request.setAttribute("SUCCESS_BEAN",
-                        new String("ERRO: <b>Mensagem excluida com sucesso!.</b>"));
+                        new String("SUCESSO: <b>Mensagem excluida com sucesso!.</b>"));
                         request.getRequestDispatcher("/miniblog/blog.jsp").forward(request, response);
                     } else {
                         request.setAttribute("ERRO_BEAN",
-                        new String("ERRO: <b>Voc� s� pode apagar mensagens enviadas por voc�.</b>"));
+                        new String("ERRO: <b>Você só pode apagar mensagens enviadas por você.</b>"));
                         request.getRequestDispatcher("/miniblog/blog.jsp").forward(request, response);
                     }                 
                 }
@@ -95,7 +95,7 @@ public class ControleBlog extends HttpServlet {
         // salvar a lista em tempo de sessao (como bean)
         contextoObjetoBean.setAttribute("BEAN_LISTA", listaMsg);
       
-        // despacho para a página de blog
+        // despacho para a pÃ¡gina de blog
         request.getRequestDispatcher("/miniblog/blog.jsp").forward(request, response);
     }
 
